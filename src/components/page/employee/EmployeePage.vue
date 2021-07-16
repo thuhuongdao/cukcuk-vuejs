@@ -2,7 +2,7 @@
     <div class="page">
         <div class="employee-header">
             <p class="employee-lable">Danh sách nhân viên</p>
-                <base-icon-button id="btn-add-employee" class="add-employee" url="icon/add.png" text="Thêm nhân viên"></base-icon-button>
+                <base-icon-button id="btn-add-employee" class="add-employee"  url="icon/add.png" text="Thêm nhân viên"></base-icon-button>
             </div>
            
           <div class="filter-bar">
@@ -93,6 +93,21 @@
                 </tr>
             </thead>
             <tbody>
+                <tr v-for="item in list " :key="item.EmployeeId" >
+                    <td class="employee-id">{{item.EmployeeCode}}</td>
+                    <td class="fullname">{{item.FullName}}</td>
+                    <td class="gender">{{item.GenderName}}</td>
+                    <td class="birthday">{{formatDate(item.DateOfBirth)}}</td>
+                    <td class="mobile">{{item.PhoneNumber}}</td>
+                    <td class="email">{{item.Email}}</td>
+                    <td class="position">{{item.PositionName}}</td>
+                    <td class="department">{{item.DepartmentName}}</td>
+                    <td class="salary">{{item.Salary}}</td>
+                    <td class="status">Fresher</td>
+
+                </tr>
+                
+                
                 
                 
                
@@ -124,6 +139,15 @@
     </div>
 </template>
 <script>
+
+import Vue from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+        
+Vue.use(VueAxios, axios)
+
+
 import BaseIconButton from '../../base/button/BaseIconButton.vue'
 
 
@@ -135,9 +159,46 @@ export default {
 
 
   },
+  data() {
+      return {
+          list : undefined,
+      }
+  },
+  methods: {
+      formatDate : function(value){
+          console.log("helo");
+          console.log(value);
+          
+          var date = new Date(value);
+          console.log(date);
+          return date.toLocaleDateString("en-GB");
+      }
+  },    
+
+  mounted() {
+
+        
+        Vue.axios.get('http://cukcuk.manhnv.net/v1/Employees')
+        .then( (response) => {
+            console.log(this);
+            console.log(response.data);
+             
+              this.list=response.data;
+            
+           
+            
+
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    },
   // ...
 }
 </script>
+
+
 <style scoped>
 
 @import '../../../css/common/page.css';
@@ -148,4 +209,7 @@ export default {
 @import '../../../css/page/employee/paging-bar.css';
 
 
+
+
 </style>
+
