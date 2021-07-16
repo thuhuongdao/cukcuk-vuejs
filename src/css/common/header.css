@@ -1,0 +1,84 @@
+.header{
+ 
+    height: 48px;
+    background-color: #ffffff;
+    display: flex;
+   
+}
+
+
+.header .left-header{
+
+display: flex;
+
+width: 220px;
+
+align-items: center;
+
+border-right: 1px solid #E5E5E5;
+
+/* box-sizing: content-box; */
+}
+.header .toggle{
+
+    
+    margin-left: 16px;
+    margin-right: 12px;
+    
+
+}
+.header .cukcuk-icon{
+    
+    height: 24px;
+
+}
+
+
+.header .header-content{
+    display: flex;
+    border-bottom: 1px solid #E5E5E5;
+    justify-content: space-between;
+    width: calc(100% - 221px);
+}
+
+.header .header-icon{
+    
+    width: 24px;
+    height: 24px;
+}
+.header .center-header{
+    display: flex;
+    align-items: center;
+    
+}
+.header .store-name{
+    font-size: 15px;
+    margin-left: 24px;
+    margin-right: 10px;
+    
+}
+
+.header .right-header{
+    
+    display: flex;
+    align-items: center;
+    
+    
+}
+
+.header .avatar{
+    
+    
+
+    width: 26px;
+    height: 26px;
+}
+.header .username{
+  
+    font-size: 13px;
+    
+}
+.header .right-item{
+    margin-right: 16px;
+}
+
