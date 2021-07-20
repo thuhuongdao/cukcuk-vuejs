@@ -1,9 +1,12 @@
 .combo-box{
+
     width: 300px;
+    box-sizing: border-box;
     position: relative;
     
 }
-.combo-box-selected{
+
+.combo-box-header{
     border: 1px solid #bbbbbb;
     border-radius: 4px;
     height: 38px;
@@ -11,7 +14,11 @@
     display: flex;
     align-items: center;
 }
-.combo-box-selected input{
+.combo-box-active{
+    border-color:  #019160 ;
+}
+
+.combo-box-header input{
     border: none;
     outline: none;
     padding: 0;
@@ -22,7 +29,7 @@
     color: #000000;
     margin-left: 16px;
 }
-.combo-box-selected input::placeholder{
+.combo-box-header input::placeholder{
  
     color: #bbbbbb;
     font-size: 11px;
@@ -38,7 +45,7 @@
     margin-right: 10px;
     display:none;
 } */
-.combo-box-selected .wrap-drop-icon{
+.combo-box-header .wrap-arrow{
    
 width: 38px;
    
@@ -56,11 +63,16 @@ margin-left: auto;
    
 border-radius: 0 4px 4px 0;
 }
-.combo-box-selected .wrap-drop-icon:hover{
+
+.combo-box-header .wrap-arrow:hover{
    
     background-color: #e5e5e5;
 }
-.combo-box-selected .dropdown-icon{
+
+.combo-box-active .wrap-arrow{
+    border-left-color: #019160 ;
+}
+.combo-box-header .arrow-icon{
     font-size: 20px;
     
     
@@ -69,21 +81,25 @@ border-radius: 0 4px 4px 0;
 }
 
 .combo-box-content{
+    width: 100%;
     position: absolute;
     top: 44px;
     z-index: 2;
     display: block;
 }
 .combo-box-content .combo-box-item{
-    width: 302px;
+    width: 100%;
     height: 38px;
     display: flex;
     align-items: center;
     background-color: #ffffff;
-    display: none;
+    
    
 
 
+}
+.combo-box-content .combo-box-item-hover{
+    background-color: #E9EBEE;
 }
 .combo-box-content .combo-box-item .check-icon{
     width: 33px;
@@ -96,13 +112,11 @@ border-radius: 0 4px 4px 0;
     
 }
 
-.combo-box-content .combo-box-item-hover{
-    background-color: #E9EBEE;
-}
-.combo-box-content .combo-box-active{
+
+.combo-box-content .combo-box-item-active{
     background-color: #019160 !important;
     color: #ffffff !important;
 }
-.combo-box-content .combo-box-active i{
+.combo-box-content .combo-box-item-active i{
     display: block !important;
 }

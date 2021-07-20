@@ -2,18 +2,14 @@
     <div class="page">
         <div class="employee-header">
             <p class="employee-lable">Danh sách nhân viên</p>
-                <base-icon-button id="btn-add-employee" class="add-employee"  url="icon/add.png" text="Thêm nhân viên"></base-icon-button>
+                <base-icon-button id="btn-add-employee" class="add-employee" url="icon/add.png" text="Thêm nhân viên"></base-icon-button>
             </div>
            
           <div class="filter-bar">
-                <div class="input icon-input">
-                    <img class="search-icon" src="../../../assets/icon/search.png">
-                    <input type="text" placeholder="Tìm kiếm theo mã, tên hoặc số điện thoại" >
-                    <img class="x-icon" src="../../../assets/icon/x.svg">
-                
-                </div>
-             
-               
+                <base-icon-input  searchIconUrl="icon/search.png" xIconUrl="icon/x.svg" place="Tìm kiếm theo mã, tên hoặc số điện thoại"></base-icon-input>
+
+               <base-auto-combo-box></base-auto-combo-box>
+              
                 <div class="dropdown">
                     <div class="dropdown-top">
                         <p class="dropdown-label">Tất cả phòng ban</p>
@@ -150,12 +146,15 @@ Vue.use(VueAxios, axios)
 
 import BaseIconButton from '../../base/button/BaseIconButton.vue'
 
+import BaseIconInput from '../../base/input/BaseIconInput.vue'
+
+import BaseAutoComboBox from '../../base/BaseAutoComboBox.vue'
 
 
 
 export default {
   components: {
-      BaseIconButton
+      BaseIconButton,BaseIconInput,BaseAutoComboBox
 
 
   },
@@ -166,13 +165,13 @@ export default {
   },
   methods: {
       formatDate : function(value){
-          console.log("helo");
-          console.log(value);
+        
           
           var date = new Date(value);
-          console.log(date);
+        //   console.log(date);
           return date.toLocaleDateString("en-GB");
-      }
+      },
+      
   },    
 
   mounted() {
@@ -180,8 +179,8 @@ export default {
         
         Vue.axios.get('http://cukcuk.manhnv.net/v1/Employees')
         .then( (response) => {
-            console.log(this);
-            console.log(response.data);
+            // console.log(this);
+            // console.log(response.data);
              
               this.list=response.data;
             
