@@ -31,7 +31,8 @@ export default {
             this.isShow = false;
             console.log(this.$refs.textInput);
 
-            this.$refs.textInput.focus()
+            this.$refs.textInput.click();
+            this.$refs.textInput.focus();
 
         }
     },

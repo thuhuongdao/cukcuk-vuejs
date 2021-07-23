@@ -1,6 +1,6 @@
 <template>
     <button  class="icon-button" >
-                    <img :src="require(`@/assets/${url}`)" />
+                    <i :class="awesomeIcon"></i>
                     <p>{{text}} </p>
         </button>
 </template>
@@ -13,10 +13,12 @@
 
 export default ({
     props :{
-        url : String,
+        awesomeIcon : String,
         text : String
-    }
+    },
 
-    
+    methods: {
+      
+    },
 })
 </script>

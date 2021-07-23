@@ -17,6 +17,9 @@
 .combo-box-active{
     border-color:  #019160 ;
 }
+.combo-box-error{
+    border-color:  #FF4747 ;
+}
 
 .combo-box-header input{
     border: none;
@@ -69,9 +72,9 @@ border-radius: 0 4px 4px 0;
     background-color: #e5e5e5;
 }
 
-.combo-box-active .wrap-arrow{
-    border-left-color: #019160 ;
-}
+
+
+
 .combo-box-header .arrow-icon{
     font-size: 20px;
     
@@ -84,8 +87,9 @@ border-radius: 0 4px 4px 0;
     width: 100%;
     position: absolute;
     top: 44px;
-    z-index: 2;
+    z-index: 5;
     display: block;
+    
 }
 .combo-box-content .combo-box-item{
     width: 100%;

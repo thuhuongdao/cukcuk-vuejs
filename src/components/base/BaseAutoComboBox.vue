@@ -1,20 +1,23 @@
 <template>
-  <div class="combo-box">
-    <div class="combo-box-header" :class="{ 'combo-box-active': isActive }">
+  <div class="combo-box" :style="{ width: comboWidth + 'px' }">
+    <div
+      class="combo-box-header"
+      :class="{ 'combo-box-active': isActive, 'combo-box-error': isError }"
+    >
       <input
-      ref="search"
-        @click="activeComboBox()"
+        ref="search"
+        @click="clickInput()"
         v-on:keyup="autoSearch"
         v-model="searchGoods"
         autocomplete="off"
         class="combo-box-input"
-        id="employee-gender"
         type="text"
         placeholder=""
+        @blur="blurInput"
       />
       <!-- <img class="x-icon" src="../content/icon/x.svg"> -->
 
-      <div class="wrap-arrow" @click="arrow">
+      <div class="wrap-arrow" @mousedown="arrow">
         <i
           class="arrow-icon fa "
           :class="[isDown ? 'fa-angle-down' : 'fa-angle-up']"
@@ -24,15 +27,17 @@
     <div class="combo-box-content" v-if="isShow">
       <div
         class="combo-box-item"
-        :class="{ 'combo-box-item-hover': hover.id == item.id, 'combo-box-item-active': active.id == item.id}"
-     
+        :class="{
+          'combo-box-item-hover': hover.id == item.id,
+          'combo-box-item-active': active == item.id,
+        }"
         @mouseover="mouseOver(index)"
-        @click="select(index)"
-        v-for="(item,index) in filtered"
+        @mousedown="select(index)"
+        v-for="(item, index) in filtered"
         :key="item.id"
       >
         <div class="check-icon"><i class="fas fa-check"></i></div>
-        <p>{{ item.gender }}</p>
+        <p>{{ item.name }}</p>
       </div>
     </div>
   </div>
@@ -42,78 +47,110 @@
 </style>
 <script>
 export default {
+  props: {
+    goodsList: [],
+    active: [String, Number],
+    comboWidth: String,
+  },
+  
+
   data() {
     return {
+     
+      id: undefined,
+
       isActive: false,
+      isError: false,
       isDown: true,
 
       isShow: false,
 
-      goodsList: [
-        {
-          id: 0,
-          gender: "Nữ",
-        },
-        {
-          id: 1,
-          gender: "Nam",
-        },
-        {
-          id: 2,
-          gender: "Khác",
-        },
-      ],
-      filtered: [
-        {
-          id: 0,
-          gender: "Nữ",
-        },
-        {
-          id: 1,
-          gender: "Nam",
-        },
-        {
-          id: 2,
-          gender: "Khác",
-        },
-      ],
+      filtered: [],
+
       hover: {
         id: -1,
         index: -1,
       },
-      active:{
-        id: -1,
-        index : -1
-      },
+
+      
       searchGoods: "",
     };
   },
+  // watch:{
+  //   defaultId: function(){
+  //     console.log("create gender");
 
+  //     if (
+  //       this.defaultId == undefined ||
+  //       this.defaultId == null ||
+  //       this.defaultId == ""
+  //     ) {
+  //       this.active.id = -1;
+  //       this.active.index = -1;
+  //       this.searchGoods = "";
+  //     } else {
+  //       console.log("gender default");
+  //       this.goodsList.forEach((item, index) => {
+  //         if (item.id == this.defaultId) {
+  //           this.active.index = index;
+  //           this.active.id = this.defaultId;
+  //           this.searchGoods = item.name;
+  //         }
+  //       });
+  //     }
+  //   }
+  // },
   methods: {
-    activeComboBox: function() {
+    /**
+     * click ra ngoai
+     * change border color
+     * xoay lai chieu mui ten
+     * close box
+     *
+     */
+    blurInput: function() {
+      console.log("blur");
+      this.isActive = false;
+      this.isDown = true;
+      this.isShow = false;
+    },
+
+    /**
+     * click vao input
+     */
+    clickInput: function() {
       this.isActive = true;
       this.isDown = false;
       this.isShow = true;
+
+      let val = this.searchGoods.toLowerCase();
+      this.filtered = this.goodsList.filter(({ name }) => {
+        return name.toLowerCase().includes(val);
+      });
+
+      this.hover.index = 0;
+      this.hover.id = this.filtered[0].id;
     },
+    /**
+     * nhap du lieu autocomplete
+     */
     autoSearch: function(event) {
-      console.log("aja");
-      console.log(event.keyCode);
       let keyCode = event.keyCode;
+
       if (keyCode == 40) {
-        if(this.isShow == false) return;
-        console.log("vao day");
+        if (this.isShow == false) return;
 
         let index = (this.hover.index + 1) % this.filtered.length;
         let id = this.filtered[index].id;
-        console.log("vao day");
+
         this.hover = {
           index,
           id,
         };
       } else if (keyCode == 38) {
-        if(this.isShow == false) return;
+        if (this.isShow == false) return;
         let index = this.hover.index - 1;
-        console.log(index);
+
         index = index < 0 ? this.filtered.length - 1 : index;
         let id = this.filtered[index].id;
 
@@ -122,64 +159,90 @@ export default {
           id,
         };
       } else if (keyCode == 13) {
-        if(this.isShow == false) return;
-        this.searchGoods = this.goodsList[this.hover.id].gender;
-        this.active.id = this.hover.id; 
-        this.isShow = false;
-        this.isDown = true;
-        this.filtered = this.goodsList;
-        
-        
-      } else {
-        console.log("watch");
-        this.isShow = true;
-        let a = this.searchGoods.toLowerCase();
-        console.log(a);
-        this.filtered = this.goodsList.filter(function(good) {
-          console.log(good);
-          console.log(good.gender.toLowerCase());
-          return good.gender.toLowerCase().includes(a);
-        });
+        // if(this.isShow == false) return;
 
+        this.searchGoods = this.filtered[this.hover.index].name;
+        this.active = this.hover.id;
+        this.$refs.search.blur();
+
+        //this.filtered = this.goodsList;
+        this.$emit("select", this.active);
+      } else {
+        /**
+         * loc data
+         */
+        // this.isShow = true;
+        let val = this.searchGoods.toLowerCase();
+        this.filtered = this.goodsList.filter(function(good) {
+          return good.name.toLowerCase().includes(val);
+        });
+        /**
+         * khong co item thoa man , error
+         */
         if (!this.filtered.length) {
+          this.isError = true;
           return;
         }
+        this.isError = false;
+        /**
+         * hover id vuot qua so luong filter dc
+         * hover lai vao item dau tien
+         */
         if (this.hover.index >= this.filtered.length) {
-          this.hover.index = -1;
-          this.hover.id = -1;
+          this.hover.index = 0;
+          this.hover.id = this.filtered[0].id;
         } else {
           const id = this.filtered[this.hover.index].id;
           this.hover.id = id;
         }
       }
     },
-    mouseOver: function(index){
+    /**
+     * hover vao cac item
+     */
+    mouseOver: function(index) {
       this.hover.index = index;
       this.hover.id = this.filtered[index].id;
     },
-    select: function (index) {
-        this.active.index = index;
-        this.active.id = this.filtered[index].id;
-        this.searchGoods = this.goodsList[this.active.id].gender;
-       
-        this.isShow = false;
-        this.isDown = true;
-        this.filtered = this.goodsList;
-        //console.log(this);
-        // console.log(this.$refs.aaa);
-        this.$refs.search.focus();
-        
+    /**
+     * chon item
+     */
+    select: function(index) {
+      console.log("chon select");
+
+      console.log(this.filtered[index].id);
+      this.active= this.filtered[index].id;
+    
+      console.log(this);
+      this.$emit("select", this.active);
+      this.searchGoods = this.filtered[index].name;
+
+      //this.isShow = false;
+      //this.isDown = true;
+      //this.filtered = this.goodsList;
+      this.isError = false;
+
       
     },
-    arrow: function(){
-      if(this.isDown == true){
+    /**
+     * click vao mui ten hien thi cac option
+     */
+    arrow: function(event) {
+      if (this.isDown == true) {
+        console.log("log ra1");
+        this.isActive = true;
         this.isDown = false;
         this.isShow = true;
-      }else{
+        this.filtered = this.goodsList;
+        this.$refs.search.focus();
+        event.preventDefault();
+      } else {
+        console.log("log ra");
         this.isDown = true;
         this.isShow = false;
+        this.isActive = false;
       }
-    }
+    },
   },
 };
 </script>

@@ -1,5 +1,4 @@
 .add-employee-modal {
-  display: none;
   position: fixed;
   z-index: 2;
   left: 0px;
@@ -20,11 +19,11 @@
   position: relative;
   border-radius: 5px;
 }
-.add-employee-modal .modal-content .modal-top{
-    padding-top: 24px;
-    padding-left: 24px;
-    padding-right: 24px;
-    padding-bottom: 8px;
+.add-employee-modal .modal-content .modal-top {
+  padding-top: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 8px;
 }
 .add-employee-modal .modal-header p {
   font-family: GoogleSans-Bold;
@@ -38,12 +37,13 @@
   right: 10px;
   cursor: pointer;
 }
+
 .add-employee-modal .modal-body {
   display: flex;
 }
 .add-employee-modal .left-body {
-  width: 221px;
-  padding-right: 24px;
+  width: 202px;
+  margin-right: 20px;
 }
 .add-employee-modal .left-body p {
   text-align: center;
@@ -55,13 +55,31 @@
   border: 1px solid rgb(187, 187, 187);
   margin-top: 10px;
 }
+/* .add-employee-modal .right-body{
+  overflow: auto;
+  max-height: calc(100vh - 200px);
+}
+.add-employee-modal .right-body::-webkit-scrollbar {
+  width: 7px;
+
+}
+.add-employee-modal .right-body::-webkit-scrollbar-track {
+  border-radius: 10px;
+    background-color: #e9ebee;
+  
+}
+.add-employee-modal .right-body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+    background-color:#bbbbbb;
+  
+} */
 .add-employee-modal .right-body > p {
   font-size: 15px;
   margin-top: 0px;
   margin-bottom: 24px;
 }
 .add-employee-modal .right-body .information td {
-  padding-right: 20px;
+  padding-right: 15px;
 }
 .add-employee-modal .right-body .information p {
   font-family: GoogleSans-Medium;
@@ -97,62 +115,35 @@
   border: 1px solid rgb(1, 145, 96);
 } */
 
-.vnd{
-  padding-right: 10px;
-  font-style: italic;
-}
-.add-employee-modal .right-body .information input[type=date] {
-  box-sizing: border-box;
-  width: 302px;
-  height: 40px;
-  border: 1px solid rgb(187, 187, 187);
-  border-radius: 4px;
-  outline: none;
-  padding-left: 16px;
-  padding-right: 8px ;
-}
 .star {
   color: red;
 }
-.add-employee-modal .modal-footer{
-    display: flex;
-    background-color: #E9EBEE;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 24px;
-    border-radius: 0 0 5px 5px;
+.add-employee-modal .modal-footer {
+  display: flex;
+  background-color: #e9ebee;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 24px;
+  border-radius: 0 0 5px 5px;
 }
-.add-employee-modal .modal-footer .right-footer{
+.add-employee-modal .modal-footer .right-footer {
   display: flex;
   margin-left: auto;
 }
-.add-employee-modal .modal-footer .m-btn-save{
-    
-
-    
-margin-left: 16px;
+.add-employee-modal .modal-footer .m-btn-save {
+  margin-left: 16px;
 }
 
-.add-employee-modal .modal-footer .m-btn-save i{
-    
-  margin-right: 8px;
-  
-}
-.add-employee-modal .modal-footer .m-btn-cancel{
+.add-employee-modal .modal-footer .m-btn-cancel {
   border: none;
   border-radius: 4px;
-  
+
   padding-left: 24px;
   padding-right: 24px;
   height: 40px;
-  text-align:  center;
-  background-color: #E9EBEE;
-
-
+  text-align: center;
+  background-color: #e9ebee;
 }
-.add-employee-modal .modal-footer .m-btn-cancel:hover{
-  background-color:#f1f2f4 ;
-
+.add-employee-modal .modal-footer .m-btn-cancel:hover {
+  background-color: #f1f2f4;
 }
-
-

@@ -80,14 +80,14 @@ width: 7px;
 }
 .employee-list tbody::-webkit-scrollbar-track
 {
-    border-radius: 10px;
+  border-radius: 10px;
     background-color: #e9ebee;
     
 }
 .employee-list tbody::-webkit-scrollbar-thumb
-{
+{border-radius: 10px;
     background-color:#bbbbbb;
-    border-radius: 10px;
+    
 
 
     

@@ -2,19 +2,23 @@
     display: flex;
     
   }
-  .page .filter-bar .icon-input{
+  .page .icon-input{
     margin-left: 16px;
     width: 300px;
   }
   
   
-  
-  
-  .refresh-button {
-    
-   
+  .page .filter-bar .right-filter{
     position: absolute;
     right: 16px;
+  }
+  .page .filter-bar .combo-box{
+    margin-left: 10px;
+  }
+  .refresh-button {
+    margin-left: 10px;
+   
+    
   }
   
   

@@ -31,7 +31,7 @@ export default {
 @import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css';
 @import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
 
-@import './css/base/button.css';
+
 @import './css/base/input/input.css';
 @import './css/base/input/icon-input.css';
 @import './css/base/input/label-input.css';
