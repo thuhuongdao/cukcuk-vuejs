@@ -6,30 +6,40 @@
         id="btn-add-employee"
         class="add-employee"
         awesomeIcon="fas fa-user-plus"
-        
         text="Thêm nhân viên"
         @click.native="addEmployee()"
       ></base-icon-button>
     </div>
 
     <div class="filter-bar">
-      <base-icon-input
-        searchIconUrl="icon/search.png"
-        xIconUrl="icon/x.svg"
-        place="Tìm kiếm theo mã, tên hoặc số điện thoại"
+      <div class="left-filter">
+        <base-icon-input
+          searchIconUrl="icon/search.png"
+          xIconUrl="icon/x.svg"
+          place="Tìm kiếm theo mã, tên hoặc số điện thoại"
+        ></base-icon-input>
+        <base-auto-combo-box
+          :goodsList="departmentList"
+          comboWidth="250"
+        ></base-auto-combo-box>
+        <base-auto-combo-box
+          :goodsList="positionList"
+          comboWidth="250"
+        ></base-auto-combo-box>
         
-      ></base-icon-input>
-      <base-auto-combo-box :goodsList="departmentList" comboWidth="250"></base-auto-combo-box>
-      <base-auto-combo-box :goodsList="positionList" comboWidth="250"></base-auto-combo-box>
-      
-
-      
-      
-      <div class="right-filter">
-        <base-second-button class="track-button" iconUrl="fa fa-trash-o" ></base-second-button>
-     <base-second-button class="refresh-button" iconUrl="fa-refresh" @click.native="loadData()"></base-second-button>
       </div>
-     
+
+      <div class="right-filter">
+        <base-second-button
+          class="track-button"
+          iconUrl="fa fa-trash-o"
+        ></base-second-button>
+        <base-second-button
+          class="refresh-button"
+          iconUrl="fa-refresh"
+          @click.native="loadData()"
+        ></base-second-button>
+      </div>
     </div>
     <div class="wrap-table">
       <table class="employee-list">
@@ -81,7 +91,13 @@
         <p>10 nhân viên/trang</p>
       </div>
     </div>
-    <employee-dialog @success="loadData" v-on:close-dialog="isShowDialog=false" :isShow="isShowDialog" :mode="dialogMode" :item="item"></employee-dialog>
+    <!-- <employee-dialog
+      @success="loadData"
+      v-on:close-dialog="isShowDialog = false"
+      :isShow="isShowDialog"
+      :mode="dialogMode"
+      :item="item"
+    ></employee-dialog> -->
   </div>
 </template>
 <script>
@@ -94,12 +110,10 @@ import BaseIconButton from "../../base/button/BaseIconButton.vue";
 
 import BaseIconInput from "../../base/input/BaseIconInput.vue";
 
-
 import BaseAutoComboBox from "../../base/BaseAutoComboBox.vue";
 import BaseSecondButton from '../../base/button/BaseSecondButton.vue';
 
-
-import EmployeeDialog from './EmployeeDialog.vue';
+// import EmployeeDialog from './EmployeeDialog.vue';
 
 export default {
   components: {
@@ -108,35 +122,32 @@ export default {
 
     BaseAutoComboBox,
     BaseSecondButton,
-    EmployeeDialog,
+    // EmployeeDialog,
   },
   data() {
     return {
       list: undefined,
-      item:{},
+      item: {},
       isShowDialog: false,
       departmentList: [],
-      positionList:[],
-      dialogMode : "add",
-      newEmployeeCode : undefined,
-
-      
+      positionList: [],
+      dialogMode: "add",
+      newEmployeeCode: undefined,
     };
   },
   methods: {
-    
-    loadData: function(){
+    loadData: function() {
       console.log("load");
       axios
-      .get("http://cukcuk.manhnv.net/v1/Employees")
-      .then((response) => {
-        console.log("load dc");
+        .get("http://cukcuk.manhnv.net/v1/Employees")
+        .then((response) => {
+          console.log("load dc");
 
-        this.list = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+          this.list = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     getNewEmployeeCode: function() {
       console.log("new");
@@ -151,46 +162,41 @@ export default {
           console.log(error);
         });
     },
-    addEmployee: function(){
+    addEmployee: function() {
       this.dialogMode = "add";
       this.item = {
         employeeCode: "",
         fullName: "",
         dateOfBirth: "",
-        gender: 0,
+        gender: null,
         identityNumber: "",
         identityDate: "",
         identityPlace: "",
         email: "",
         phoneNumber: "",
-        departmentId: "",
-        positionId: "",
-        workStatus: undefined,
+        departmentId: null,
+        positionId: null,
+        workStatus: null,
         personalTaxCode: "",
-        salary: undefined,
-        joinDate : "",
-      }
+        salary: null,
+        joinDate: "",
+        genderName: "",
+      };
+
       this.getNewEmployeeCode();
       this.isShowDialog = true;
-
     },
-    
+
     formatDate: function(value) {
       var date = new Date(value);
 
       return date.toLocaleDateString("en-GB");
     },
-
   },
 
   created() {
     this.loadData();
-    
-      
-   
-    
   },
- 
 };
 </script>
 
@@ -201,5 +207,4 @@ export default {
 @import "../../../css/page/employee/wrap-table.css";
 @import "../../../css/page/employee/table.css";
 @import "../../../css/page/employee/paging-bar.css";
-
 </style>

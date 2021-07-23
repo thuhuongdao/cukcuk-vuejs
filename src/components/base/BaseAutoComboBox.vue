@@ -8,7 +8,7 @@
         ref="search"
         @click="clickInput()"
         v-on:keyup="autoSearch"
-        v-model="searchGoods"
+        v-model="searchContent"
         autocomplete="off"
         class="combo-box-input"
         type="text"
@@ -50,9 +50,18 @@ export default {
   props: {
     goodsList: [],
     active: [String, Number],
+    value : {
+      default : "",
+    },
     comboWidth: String,
   },
-  
+  computed: {
+    searchContent: 
+       function(){
+        return this.value;
+      },
+      
+  },
 
   data() {
     return {
@@ -73,7 +82,7 @@ export default {
       },
 
       
-      searchGoods: "",
+     
     };
   },
   // watch:{
@@ -87,14 +96,14 @@ export default {
   //     ) {
   //       this.active.id = -1;
   //       this.active.index = -1;
-  //       this.searchGoods = "";
+  //       this.value = "";
   //     } else {
   //       console.log("gender default");
   //       this.goodsList.forEach((item, index) => {
   //         if (item.id == this.defaultId) {
   //           this.active.index = index;
   //           this.active.id = this.defaultId;
-  //           this.searchGoods = item.name;
+  //           this.value = item.name;
   //         }
   //       });
   //     }
@@ -123,7 +132,7 @@ export default {
       this.isDown = false;
       this.isShow = true;
 
-      let val = this.searchGoods.toLowerCase();
+      let val = this.searchContent.toLowerCase();
       this.filtered = this.goodsList.filter(({ name }) => {
         return name.toLowerCase().includes(val);
       });
@@ -161,7 +170,7 @@ export default {
       } else if (keyCode == 13) {
         // if(this.isShow == false) return;
 
-        this.searchGoods = this.filtered[this.hover.index].name;
+        this.searchContent = this.filtered[this.hover.index].name;
         this.active = this.hover.id;
         this.$refs.search.blur();
 
@@ -172,7 +181,7 @@ export default {
          * loc data
          */
         // this.isShow = true;
-        let val = this.searchGoods.toLowerCase();
+        let val = this.searchContent.toLowerCase();
         this.filtered = this.goodsList.filter(function(good) {
           return good.name.toLowerCase().includes(val);
         });
@@ -210,13 +219,16 @@ export default {
     select: function(index) {
       console.log("chon select");
 
-      console.log(this.filtered[index].id);
+
       this.active= this.filtered[index].id;
     
-      console.log(this);
+      //console.log(this);
       this.$emit("select", this.active);
-      this.searchGoods = this.filtered[index].name;
-
+      this.searchContent = this.filtered[index].name;
+      console.log(this.filtered[index].name);
+      console.log(this.searchContent);
+      console.log(this);
+      console.log(this.searchContent);
       //this.isShow = false;
       //this.isDown = true;
       //this.filtered = this.goodsList;

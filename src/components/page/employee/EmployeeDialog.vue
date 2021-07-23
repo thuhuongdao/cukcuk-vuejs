@@ -73,7 +73,7 @@
                       id="employee-gender"
                       :goodsList="genderList"
                        :active="item.gender"
-                   
+                   v-model = "item.genderName"
                
                       v-on:select="item.gender = $event"
                       comboWidth="300"
@@ -167,6 +167,9 @@
                     <base-auto-combo-box
                       id="employee-position"
                       :goodsList="positionList"
+                      :active="item.positionId"
+                   :value="positionName(item.positionId)"
+
                       v-on:select="item.positionId = $event"
                      
          
@@ -177,6 +180,11 @@
                     <base-auto-combo-box
                       id="employee-department"
                       :goodsList="departmentList"
+
+
+                      :active="item.departmentId"
+                   :value="departmentName(item.departmentId)"
+
                       v-on:select="item.departmentId = $event"
                     
             
@@ -230,6 +238,9 @@
                     <base-auto-combo-box
                       id="employee-status"
                       :goodsList="workStatus"
+                      :active="item.workStatus"
+                   :value="workStatusName(item.workStatus)"
+
                       v-on:select="item.workStatus = $event"
                       comboWidth="300"
                     ></base-auto-combo-box>
@@ -309,6 +320,20 @@ export default {
   methods: {
    
     
+    departmentName: function(value){
+      if(value == null) return "";
+      for(let i =0 ; i < this.departmentList.length ;i++)
+        if(value == this.departmentList[i]) return this.departmentList[i].name;
+    },
+    positionName: function(value){
+      if(value == null) return "";
+      for(let i =0 ; i < this.positionList.length ;i++)
+        if(value == this.positionList[i]) return this.positionList[i].name;
+    },
+    workStatusName: function(value){
+      if(value == null) return "";
+      return "Đang thử việc";
+    },
     addEmployee : function (){
       axios.post("http://cukcuk.manhnv.net/v1/Employees",this.item)
       .then(response =>{
@@ -336,6 +361,8 @@ export default {
         personalTaxCode: "",
         salary: undefined,
         joinDate : "",
+        genderName : "",
+
       }
 
     },

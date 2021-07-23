@@ -22,7 +22,9 @@ import TheEmployeePage from './components/page/employee/EmployeePage.vue'
 export default {
   name: 'App',
   components: {
-    TheHeader,TheMenu,TheEmployeePage
+    TheHeader
+    ,TheMenu
+    ,TheEmployeePage
   }
 }
 </script>
