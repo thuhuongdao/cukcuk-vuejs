@@ -1,15 +1,11 @@
 <template>
-     <button class="second-button ">
-        <i class="fa" :class="iconUrl" ></i>
-      </button>
+    <button class="second-button">{{text}}</button>
 </template>
 <style scoped>
-@import '../../../css/base/second-button.css';
+@import '../../../css/base/button/second-button.css';
 </style>
 <script>
 export default {
-    props :{
-        iconUrl : String,
-    }
+    props: ['text']
 }
 </script>

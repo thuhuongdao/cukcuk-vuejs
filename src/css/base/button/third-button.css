@@ -1,4 +1,4 @@
-.second-button{
+.third-button{
     outline: none;
     border: 1px solid rgb(187, 187, 187);
     border-radius: 4px;
@@ -6,10 +6,10 @@
     height: 40px;
     width: 40px;
 }
-.second-button:hover{
+.third-button:hover{
     background-color: #E9EBEE;
 }
-.second-button i{
+.third-button i{
     font-size: 16px;
     color: #bbbbbb;
 }

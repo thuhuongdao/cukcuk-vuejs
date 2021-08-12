@@ -4,10 +4,11 @@ input[type="date"] {
     height: 40px;
     border: 1px solid rgb(187, 187, 187);
     border-radius: 4px;
+  
     outline: none;
     padding-left: 16px;
     padding-right: 8px ;
 }
 .active-date{
-    border-color: #019160 ;
+    border-color: #019160 !important ;
 }

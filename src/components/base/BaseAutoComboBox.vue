@@ -1,18 +1,18 @@
 <template>
-  <div class="combo-box" :style="{ width: comboWidth + 'px' }">
+  <div class="combo-box" :style="{ width: comboWidth }">
     <div
       class="combo-box-header"
       :class="{ 'combo-box-active': isActive, 'combo-box-error': isError }"
     >
       <input
+        class="combo-box-input"
+        type="text"
+        placeholder=""
         ref="search"
         @click="clickInput()"
         v-on:keyup="autoSearch"
         v-model="searchContent"
         autocomplete="off"
-        class="combo-box-input"
-        type="text"
-        placeholder=""
         @blur="blurInput"
       />
       <!-- <img class="x-icon" src="../content/icon/x.svg"> -->
@@ -46,26 +46,22 @@
 @import "../../css/base/combo-box.css";
 </style>
 <script>
+import Vue from "vue";
+import axios from "axios";
+import VueAxios from "vue-axios";
+Vue.use(VueAxios, axios);
 export default {
   props: {
-    goodsList: [],
-    active: [String, Number],
-    value : {
-      default : "",
-    },
+    type: String,
     comboWidth: String,
+    value: {
+      default : null,
+    },
   },
-  computed: {
-    searchContent: 
-       function(){
-        return this.value;
-      },
-      
-  },
-
   data() {
     return {
-     
+      searchContent: "",
+
       id: undefined,
 
       isActive: false,
@@ -80,35 +76,91 @@ export default {
         id: -1,
         index: -1,
       },
+      active : null,
+      goodsList : [],
 
-      
-     
+
     };
   },
-  // watch:{
-  //   defaultId: function(){
-  //     console.log("create gender");
+  created: function(){
+    if(this.type == "gender"){
+      this.goodsList = [{
+          id : 0,
+          name : "Nữ",
 
-  //     if (
-  //       this.defaultId == undefined ||
-  //       this.defaultId == null ||
-  //       this.defaultId == ""
-  //     ) {
-  //       this.active.id = -1;
-  //       this.active.index = -1;
-  //       this.value = "";
-  //     } else {
-  //       console.log("gender default");
-  //       this.goodsList.forEach((item, index) => {
-  //         if (item.id == this.defaultId) {
-  //           this.active.index = index;
-  //           this.active.id = this.defaultId;
-  //           this.value = item.name;
-  //         }
-  //       });
-  //     }
-  //   }
-  // },
+        },
+        {
+          id : 1,
+          name : "Nam",
+        },{
+          id : 2,
+          name : "Không xác định",
+        }
+
+      ]
+    }else if(this.type == "workStatus"){
+      this.goodsList = [
+       {
+          id: 0,
+          name: "Đang thử việc",
+        },
+      ]
+    }else if(this.type == "department"){
+      axios
+      .get("http://cukcuk.manhnv.net/api/Department")
+      .then((res) => {
+        for(let element of res.data){
+
+          this.goodsList.push({
+            id: element.DepartmentId,
+            name: element.DepartmentName,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }else{
+      axios
+      .get("http://cukcuk.manhnv.net/v1/Positions")
+      .then((res) => {
+        for(let element of res.data){
+
+          this.goodsList.push({
+            id: element.PositionId,
+            name: element.PositionName,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    }
+  },
+  watch:{
+    value: function(val){
+      
+      if(val == null) {
+        console.log("watch1");
+        this.active = null;
+        this.searchContent = "";
+      }else{
+        console.log("watch2");
+        console.log(this.goodsList);
+        this.active = val;
+        let obj = this.goodsList.find(function(item){
+         // console.log(item.id);
+          return item.id == val;
+        });
+        
+        this.searchContent =  obj.name;
+      }
+    }
+  },
+
+
+
   methods: {
     /**
      * click ra ngoai
@@ -118,10 +170,11 @@ export default {
      *
      */
     blurInput: function() {
-      console.log("blur");
+  
       this.isActive = false;
       this.isDown = true;
       this.isShow = false;
+      this.$emit('blur', this.isError);
     },
 
     /**
@@ -217,31 +270,29 @@ export default {
      * chon item
      */
     select: function(index) {
-      console.log("chon select");
+
 
 
       this.active= this.filtered[index].id;
-    
-      //console.log(this);
+
+   
       this.$emit("select", this.active);
       this.searchContent = this.filtered[index].name;
       console.log(this.filtered[index].name);
       console.log(this.searchContent);
       console.log(this);
       console.log(this.searchContent);
-      //this.isShow = false;
-      //this.isDown = true;
-      //this.filtered = this.goodsList;
+     
       this.isError = false;
 
-      
+
     },
     /**
      * click vao mui ten hien thi cac option
      */
     arrow: function(event) {
       if (this.isDown == true) {
-        console.log("log ra1");
+    
         this.isActive = true;
         this.isDown = false;
         this.isShow = true;
@@ -249,7 +300,7 @@ export default {
         this.$refs.search.focus();
         event.preventDefault();
       } else {
-        console.log("log ra");
+      
         this.isDown = true;
         this.isShow = false;
         this.isActive = false;

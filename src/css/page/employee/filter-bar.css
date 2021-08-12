@@ -6,6 +6,7 @@
   .page .filter-bar .left-filter{
       display: flex;
       margin-left: 16px;
+      width: 65%;
   }
 
   /* .page .icon-input{
@@ -19,7 +20,7 @@
     margin-right: 16px;
   }
   .page .filter-bar .combo-box{
-    /* margin-left: 10px; */
+    margin-left: 10px;
   }
   .refresh-button {
     margin-left: 10px;

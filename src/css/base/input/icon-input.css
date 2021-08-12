@@ -1,4 +1,6 @@
-
+.icon-input{
+    width: 35%;
+}
 .icon-input input::placeholder{
     font-size: 12px;
     

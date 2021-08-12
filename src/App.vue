@@ -43,6 +43,7 @@ export default {
 
 
 @import './css/common/main.css';
+@import './css/common/common.css';
 @import './css/common/wrap.css';
 
 

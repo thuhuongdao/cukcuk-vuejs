@@ -1,0 +1,17 @@
+.second-button{
+    height: 40px;
+
+    box-sizing: border-box;
+
+    
+    border-radius: 4px;
+    padding-left: 24px ;
+    padding-right: 24px;
+    background-color: #e9ebee;
+    font-size: 13px;
+    color: #000000;
+    
+}
+.second-button:hover{
+    background-color: #bbbbbb;
+}

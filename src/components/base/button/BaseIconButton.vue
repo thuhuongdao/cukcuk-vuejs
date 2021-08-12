@@ -5,7 +5,7 @@
         </button>
 </template>
 <style scoped>
-@import '../../../css/base/icon-button.css';
+@import '../../../css/base/button/icon-button.css';
 </style>
 
 <script>

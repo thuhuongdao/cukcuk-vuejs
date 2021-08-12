@@ -1,0 +1,19 @@
+.normal-button{
+    outline: none;
+    border: none;
+    background-color:  #019160;
+    border-radius: 4px;
+    height: 40px;
+    box-sizing: border-box;
+    font-size: 13px;
+    color: #ffffff;
+    padding-left: 24px ;
+    padding-right: 24px;
+    text-align: center;
+}
+.normal-button:hover{
+    background-color: #2FBE8E;
+}
+.normal-button:active{
+    background-color: #01b075;
+}

@@ -1,3 +1,6 @@
+.label-input{
+    width: 300px;
+}
 .label-input input{
     margin-left: 16px ;
 }

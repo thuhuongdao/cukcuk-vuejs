@@ -1,92 +1,91 @@
-.add-employee-modal {
+.employee-modal {
   position: fixed;
   z-index: 2;
   left: 0px;
   top: 0px;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
 }
-.add-employee-modal .modal-content {
+.employee-modal .modal-content {
   background-color: rgb(255, 255, 255);
   width: fit-content;
   height: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 24px;
-  margin-bottom: 24px;
+  
   position: relative;
   border-radius: 5px;
 }
-.add-employee-modal .modal-content .modal-top {
+.employee-modal .modal-content .modal-top {
   padding-top: 24px;
   padding-left: 24px;
   padding-right: 24px;
   padding-bottom: 8px;
 }
-.add-employee-modal .modal-header p {
+.employee-modal .modal-header p {
   font-family: GoogleSans-Bold;
   font-size: 24px;
   margin-top: 0px;
   margin-bottom: 24px;
 }
-.add-employee-modal .modal-header img {
+.employee-modal .modal-header img {
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
 }
 
-.add-employee-modal .modal-body {
+.employee-modal .modal-body {
   display: flex;
 }
-.add-employee-modal .left-body {
-  width: 202px;
+.employee-modal .left-body {
+  width: 182px;
   margin-right: 20px;
 }
-.add-employee-modal .left-body p {
+.employee-modal .left-body p {
   text-align: center;
 }
-.add-employee-modal .left-body img {
-  width: 200px;
-  height: 200px;
+.employee-modal .left-body img {
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   border: 1px solid rgb(187, 187, 187);
   margin-top: 10px;
 }
-/* .add-employee-modal .right-body{
+.employee-modal .right-body{
   overflow: auto;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 195px);
 }
-.add-employee-modal .right-body::-webkit-scrollbar {
+.employee-modal .right-body::-webkit-scrollbar {
   width: 7px;
 
 }
-.add-employee-modal .right-body::-webkit-scrollbar-track {
+.employee-modal .right-body::-webkit-scrollbar-track {
   border-radius: 10px;
     background-color: #e9ebee;
   
 }
-.add-employee-modal .right-body::-webkit-scrollbar-thumb {
+.employee-modal .right-body::-webkit-scrollbar-thumb {
   border-radius: 10px;
     background-color:#bbbbbb;
   
-} */
-.add-employee-modal .right-body > p {
+}
+.employee-modal .right-body > p {
   font-size: 15px;
   margin-top: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 4px;
 }
-.add-employee-modal .right-body .information td {
+.employee-modal .right-body .information td {
   padding-right: 15px;
 }
-.add-employee-modal .right-body .information p {
+.employee-modal .right-body .information p {
   font-family: GoogleSans-Medium;
   margin-top: 0;
   margin-bottom: 4px;
 }
-/* .add-employee-modal .right-body .information input {
+/* .employee-modal .right-body .information input {
   width: 300px;
   height: 40px;
   border: 1px solid rgb(187, 187, 187);
@@ -97,10 +96,10 @@
   outline: none;
   margin-bottom: 16px;
 }
-.add-employee-modal .right-body .information input:focus {
+.employee-modal .right-body .information input:focus {
   border: 1px solid rgb(1, 145, 96);
 } */
-/* .add-employee-modal .right-body .information select {
+/* .employee-modal .right-body .information select {
   width: 322px;
   height: 40px;
   border: 1px solid rgb(187, 187, 187);
@@ -111,14 +110,14 @@
   outline: none;
   margin-bottom: 16px;
 }
-.add-employee-modal .right-body .information select:focus {
+.employee-modal .right-body .information select:focus {
   border: 1px solid rgb(1, 145, 96);
 } */
 
 .star {
   color: red;
 }
-.add-employee-modal .modal-footer {
+.employee-modal .modal-footer {
   display: flex;
   background-color: #e9ebee;
   padding-top: 10px;
@@ -126,15 +125,15 @@
   padding-right: 24px;
   border-radius: 0 0 5px 5px;
 }
-.add-employee-modal .modal-footer .right-footer {
+.employee-modal .modal-footer .right-footer {
   display: flex;
   margin-left: auto;
 }
-.add-employee-modal .modal-footer .m-btn-save {
+.employee-modal .modal-footer .m-btn-save {
   margin-left: 16px;
 }
 
-.add-employee-modal .modal-footer .m-btn-cancel {
+.employee-modal .modal-footer .m-btn-cancel {
   border: none;
   border-radius: 4px;
 
@@ -144,6 +143,12 @@
   text-align: center;
   background-color: #e9ebee;
 }
-.add-employee-modal .modal-footer .m-btn-cancel:hover {
+.employee-modal .modal-footer .m-btn-cancel:hover {
   background-color: #f1f2f4;
+}
+.green-line{
+  height: 2px;
+  width: 100px;
+  background-color: #019160;
+  margin-bottom: 12px;
 }

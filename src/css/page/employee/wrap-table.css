@@ -1,7 +1,31 @@
 .wrap-table{
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 24px;
-    height: calc(100% - 142px);
+  margin-top: 24px;
+  width: calc(100% - 32px);
+  height: calc(100% - 198px);
+  margin-left: auto;
+  margin-right: auto;
+  overflow: scroll;
+
     
   }
+  .wrap-table::-webkit-scrollbar
+  {
+  width: 7px;
+  height: 7px;
+  
+  
+  }
+  .wrap-table::-webkit-scrollbar-track
+  {
+    border-radius: 10px;
+      background-color: #e9ebee;
+      
+  }
+  .wrap-table::-webkit-scrollbar-thumb
+  {border-radius: 10px;
+      background-color:#bbbbbb;
+      
+  
+  
+      
+}

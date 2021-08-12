@@ -1,6 +1,6 @@
 <template>
   <!-- The Modal -->
-  <div id="add-employee-modal-id" class="add-employee-modal" v-show="isShow">
+  <div id="employee-modal-id" class="employee-modal" @click="clickOutSide">
     <!--Modal content-->
     <div class="modal-content">
       <div class="modal-top">
@@ -22,6 +22,7 @@
             </div>
             <div class="right-body">
               <p>A. Thông tin chung</p>
+              <div class="green-line"></div>
               <table class="information">
                 <tr>
                   <td>
@@ -35,10 +36,12 @@
                   <td>
                     <base-label-input
                       id="employee-code"
+                      ref="employeeCode"
                       status="1"
                       :value="item.employeeCode"
                       @input="item.employeeCode = $event"
                       inputType="text"
+                      @blur="error.employeeCode = $event"
                     ></base-label-input>
                   </td>
                   <td>
@@ -48,6 +51,7 @@
                       :value="item.fullName"
                       @input="item.fullName = $event"
                       inputType="text"
+                      @blur="error.fullName = $event"
                     ></base-label-input>
                   </td>
                 </tr>
@@ -63,20 +67,20 @@
                   <td>
                     <base-date-input
                       id="employee-dob"
-                      :date="item.dateOfBirth"
+                      :date="formatDateInput(item.dateOfBirth)"
                       v-on:pick-date="item.dateOfBirth = $event"
+                      dateType = "dateOfBirth"
                     />
                   </td>
 
                   <td>
                     <base-auto-combo-box
                       id="employee-gender"
-                      :goodsList="genderList"
-                       :active="item.gender"
-                   v-model = "item.genderName"
-               
+                      type="gender"
+                      :value="item.gender"
                       v-on:select="item.gender = $event"
-                      comboWidth="300"
+                      comboWidth="300px"
+                      @blur="error.gender = $event"
                     ></base-auto-combo-box>
                   </td>
                 </tr>
@@ -96,13 +100,15 @@
                       :value="item.identityNumber"
                       @input="item.identityNumber = $event"
                       inputType="identify"
+                      @blur="error.identityNumber = $event"
                     ></base-label-input>
                   </td>
                   <td>
                     <base-date-input
                       id="employee-indetify-date"
-                      :date="item.identityDate"
+                      :date="formatDateInput(item.identityDate)"
                       v-on:pick-date="item.identityDate = $event"
+                      dateType = "identityDate"
                     />
                   </td>
                 </tr>
@@ -138,6 +144,7 @@
                       :value="item.email"
                       @input="item.email = $event"
                       inputType="email"
+                      @blur="error.email = $event"
                     ></base-label-input>
                   </td>
                   <td>
@@ -147,12 +154,14 @@
                       :value="item.phoneNumber"
                       @input="item.phoneNumber = $event"
                       inputType="phoneNumber"
+                      @blur="error.phoneNumber = $event"
                     ></base-label-input>
                   </td>
                 </tr>
               </table>
 
               <p>B.Thông tin công việc</p>
+              <div class="green-line"></div>
               <table class="information">
                 <tr>
                   <td>
@@ -166,29 +175,21 @@
                   <td>
                     <base-auto-combo-box
                       id="employee-position"
-                      :goodsList="positionList"
-                      :active="item.positionId"
-                   :value="positionName(item.positionId)"
-
+                      type="position"
+                      :value="item.positionId"
                       v-on:select="item.positionId = $event"
-                     
-         
-                      comboWidth="300"
+                      comboWidth="300px"
+                      @blur="error.position = $event"
                     ></base-auto-combo-box>
                   </td>
                   <td>
                     <base-auto-combo-box
                       id="employee-department"
-                      :goodsList="departmentList"
-
-
-                      :active="item.departmentId"
-                   :value="departmentName(item.departmentId)"
-
+                      type="department"
+                      :value="item.departmentId"
                       v-on:select="item.departmentId = $event"
-                    
-            
-                      comboWidth="300"
+                      comboWidth="300px"
+                      @blur="error.department = $event"
                     ></base-auto-combo-box>
                   </td>
                 </tr>
@@ -207,7 +208,7 @@
                       status="0"
                       :value="item.personalTaxCode"
                       @input="item.personalTaxCode = $event"
-                      inputType="number"
+                      inputType="tax-code"
                     ></base-label-input>
                   </td>
                   <td>
@@ -229,20 +230,22 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><base-date-input id="employee-joindate"
-                   @pick-date="item.joinDate = $event"
-                   :date="item.identityDate"
-                   />
-                   </td>
+                  <td>
+                    <base-date-input
+                      id="employee-joindate"
+                      @pick-date="item.joinDate = $event"
+                      :date="formatDateInput(item.joinDate)"
+                      dateType = "joinDate"
+                    />
+                  </td>
                   <td>
                     <base-auto-combo-box
                       id="employee-status"
-                      :goodsList="workStatus"
-                      :active="item.workStatus"
-                   :value="workStatusName(item.workStatus)"
-
+                      type="workStatus"
+                      :value="item.workStatus"
                       v-on:select="item.workStatus = $event"
-                      comboWidth="300"
+                      comboWidth="300px"
+                      @blur="error.workStatus = $event"
                     ></base-auto-combo-box>
                   </td>
                 </tr>
@@ -264,6 +267,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 <style scoped>
@@ -280,125 +284,109 @@ import BaseAutoComboBox from "../../base/BaseAutoComboBox.vue";
 import BaseDateInput from "../../base/input/BaseDateInput.vue";
 import BaseIconButton from "../../base/button/BaseIconButton.vue";
 
+
 export default {
   components: {
     BaseLabelInput,
     BaseAutoComboBox,
     BaseDateInput,
     BaseIconButton,
+
   },
-  props: ["isShow", "mode","item"],
-  
+  props: ["mode", "item"],
+
   data() {
     return {
-      
-      genderList: [
-        {
-          id: 0,
-          name: "Nữ",
-        },
-        {
-          id: 1,
-          name: "Nam",
-        },
-        {
-          id: 2,
-          name: "Khác",
-        },
-      ],
-      workStatus: [
-        {
-          id: 0,
-          name: "Đang thử việc",
-        },
-      ],
-      departmentList: [],
-      positionList: [],
-      
+      error: {
+        employeeCode: false,
+        fullName: false,
+        gender: false,
+        identityNumber: false,
+        email: false,
+        phoneNumber: false,
+        position: false,
+        department: false,
+        workStatus: false,
+      },
     };
   },
   methods: {
-   
     
-    departmentName: function(value){
-      if(value == null) return "";
-      for(let i =0 ; i < this.departmentList.length ;i++)
-        if(value == this.departmentList[i]) return this.departmentList[i].name;
+    focusCode: function() {
+ 
+      this.$refs.employeeCode.clickInput();
     },
-    positionName: function(value){
-      if(value == null) return "";
-      for(let i =0 ; i < this.positionList.length ;i++)
-        if(value == this.positionList[i]) return this.positionList[i].name;
+    close: function(){
+      this.$emit('close-dialog');
     },
-    workStatusName: function(value){
-      if(value == null) return "";
-      return "Đang thử việc";
+    clickOutSide: function(event){
+      if(event.target.classList.contains('employee-modal')){
+                this.close();
+            }
     },
-    addEmployee : function (){
-      axios.post("http://cukcuk.manhnv.net/v1/Employees",this.item)
-      .then(response =>{
-        console.log("add thanh cong");
-        console.log(response);
-        //this.emptyForm();
-       this.$emit('close-dialog')
-        this.$emit('success');
-      })
-    },
-    emptyForm(){
-      this.item ={
-        employeeCode: "",
-        fullName: "",
-        dateOfBirth: "",
-        gender: undefined,
-        identityNumber: "",
-        identityDate: "",
-        identityPlace: "",
-        email: "",
-        phoneNumber: "",
-        departmentId: "",
-        positionId: "",
-        workStatus: undefined,
-        personalTaxCode: "",
-        salary: undefined,
-        joinDate : "",
-        genderName : "",
+    formatDateInput:function(value){
+      if(value == null) return null;
+      var date = new Date(value);
+      var dd = date.getDate();
+    var mm = date.getMonth()+1; //January is 0!
+    var yyyy = date.getFullYear();
+    if(dd<10){
+            dd='0'+dd
+        } 
+        if(mm<10){
+            mm='0'+mm
+        } 
 
+   return yyyy+'-'+mm+'-'+dd;
+
+
+
+    },
+
+    validForm: function() {
+      if (
+        this.item.employeeCode == "" ||
+        this.item.fullName == "" ||
+        this.item.identityNumber == "" ||
+        this.item.email == "" ||
+        this.item.phoneNumber == ""
+      )
+        return false;
+      for (let item in this.error) {
+        if (this.error[item] == true) return false;
       }
-
+      return true;
     },
-    save: function(){
-      if(this.mode== "add") this.addEmployee();
-    }
-  },
-  created() {
-    axios
-      .get("http://cukcuk.manhnv.net/api/Department")
-      .then((res) => {
-        res.data.forEach((element, index) => {
-          console.log(index);
-          this.departmentList.push({
-            id: element.DepartmentId,
-            name: element.DepartmentName,
-          });
+    addEmployee: function() {
+      axios
+        .post("https://localhost:44301/api/v1/employees", this.item)
+        .then((response) => {
+          // console.log("add thanh cong");
+          console.log(response);
+          this.close();
+          this.$emit("success");
         });
+    },
+    editEmployee: function(){
+     
+      axios.put("http://cukcuk.manhnv.net/v1/Employees/" + this.item.employeeId, this.item)
+      .then((res) =>{
+        console.log(res);
+        
+        this.close();
+        this.$emit("success");
       })
-      .catch((error) => {
-        console.log(error);
-      });
-    axios
-      .get("http://cukcuk.manhnv.net/v1/Positions")
-      .then((res) => {
-        res.data.forEach((element, index) => {
-          console.log(index);
-          this.positionList.push({
-            id: element.PositionId,
-            name: element.PositionName,
-          });
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    },
+
+    save: function() {
+
+      if (this.validForm()) {
+
+
+        if (this.mode == "add") this.addEmployee();
+        else this.editEmployee();
+      }
+    },
   },
 };
 </script>
