@@ -27,13 +27,6 @@
                 <tr>
                   <td>
                     <p>Mã nhân viên (<span class="star">*</span>)</p>
-                  </td>
-                  <td>
-                    <p>Họ và tên (<span class="star">*</span>)</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
                     <base-label-input
                       id="employee-code"
                       ref="employeeCode"
@@ -45,6 +38,7 @@
                     ></base-label-input>
                   </td>
                   <td>
+                    <p>Họ và tên (<span class="star">*</span>)</p>
                     <base-label-input
                       id="employee-fullname"
                       status="1"
@@ -55,16 +49,10 @@
                     ></base-label-input>
                   </td>
                 </tr>
+              
                 <tr>
                   <td>
                     <p>Ngày sinh</p>
-                  </td>
-                  <td>
-                    <p>Giới tính</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
                     <base-date-input
                       id="employee-dob"
                       :date="formatDateInput(item.dateOfBirth)"
@@ -72,8 +60,8 @@
                       dateType = "dateOfBirth"
                     />
                   </td>
-
                   <td>
+                    <p>Giới tính</p>
                     <base-auto-combo-box
                       id="employee-gender"
                       type="gender"
@@ -84,17 +72,11 @@
                     ></base-auto-combo-box>
                   </td>
                 </tr>
+                
                 <tr>
                   <td>
                     <p>Số CMTND/ Căn cước (<span class="star">*</span>)</p>
-                  </td>
-                  <td>
-                    <p>Ngày cấp</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <base-label-input
+                     <base-label-input
                       id="employee-identify"
                       status="1"
                       :value="item.identityNumber"
@@ -104,6 +86,7 @@
                     ></base-label-input>
                   </td>
                   <td>
+                    <p>Ngày cấp</p>
                     <base-date-input
                       id="employee-indetify-date"
                       :date="formatDateInput(item.identityDate)"
@@ -112,13 +95,10 @@
                     />
                   </td>
                 </tr>
+                
                 <tr>
                   <td>
                     <p>Nơi cấp</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
                     <base-label-input
                       id="employee-identify-place"
                       status="0"
@@ -128,16 +108,10 @@
                     ></base-label-input>
                   </td>
                 </tr>
+                
                 <tr>
                   <td>
                     <p>Email (<span class="star">*</span>)</p>
-                  </td>
-                  <td>
-                    <p>Số điện thoại (<span class="star">*</span>)</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
                     <base-label-input
                       id="employee-email"
                       status="1"
@@ -148,6 +122,7 @@
                     ></base-label-input>
                   </td>
                   <td>
+                    <p>Số điện thoại (<span class="star">*</span>)</p>
                     <base-label-input
                       id="employee-phone"
                       status="1"
@@ -158,6 +133,7 @@
                     ></base-label-input>
                   </td>
                 </tr>
+                
               </table>
 
               <p>B.Thông tin công việc</p>
@@ -166,13 +142,6 @@
                 <tr>
                   <td>
                     <p>Vị trí</p>
-                  </td>
-                  <td>
-                    <p>Phòng ban</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
                     <base-auto-combo-box
                       id="employee-position"
                       type="position"
@@ -183,6 +152,7 @@
                     ></base-auto-combo-box>
                   </td>
                   <td>
+                    <p>Phòng ban</p>
                     <base-auto-combo-box
                       id="employee-department"
                       type="department"
@@ -193,16 +163,10 @@
                     ></base-auto-combo-box>
                   </td>
                 </tr>
+                
                 <tr>
                   <td>
                     <p>Mã số thuế cá nhân</p>
-                  </td>
-                  <td>
-                    <p>Mức lương cơ bản</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
                     <base-label-input
                       id="employee-tax-code"
                       status="0"
@@ -212,6 +176,7 @@
                     ></base-label-input>
                   </td>
                   <td>
+                    <p>Mức lương cơ bản</p>
                     <base-label-input
                       id="employee-salary"
                       status="0"
@@ -221,16 +186,10 @@
                     ></base-label-input>
                   </td>
                 </tr>
+                
                 <tr>
                   <td>
                     <p>Ngày gia nhập công ty</p>
-                  </td>
-                  <td>
-                    <p>Tình trạng công việc</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
                     <base-date-input
                       id="employee-joindate"
                       @pick-date="item.joinDate = $event"
@@ -239,6 +198,7 @@
                     />
                   </td>
                   <td>
+                    <p>Tình trạng công việc</p>
                     <base-auto-combo-box
                       id="employee-status"
                       type="workStatus"
@@ -249,6 +209,7 @@
                     ></base-auto-combo-box>
                   </td>
                 </tr>
+                
               </table>
             </div>
           </div>
@@ -310,12 +271,13 @@ export default {
       },
     };
   },
+  mounted(){
+    console.log("auto");
+      this.$refs.employeeCode.autoFocus();
+  },
   methods: {
+   
     
-    focusCode: function() {
- 
-      this.$refs.employeeCode.clickInput();
-    },
     close: function(){
       this.$emit('close-dialog');
     },
@@ -324,6 +286,10 @@ export default {
                 this.close();
             }
     },
+    //  autoFocus: function(){
+    //    console.log("auto");
+    //   this.$refs.employeeCode.autoFocus();
+    // },
     formatDateInput:function(value){
       if(value == null) return null;
       var date = new Date(value);

@@ -13,6 +13,7 @@
       @keypress="keyPress"
       @keyup="keyUp"
       @blur="blurInput"
+      
     />
     <img
       class="x-icon"
@@ -76,6 +77,13 @@ export default {
     },
   },
   methods: {
+    autoFocus: function(){
+      // console.log("auto12");
+      
+      // console.log(this.$refs.input);
+ 
+      this.$refs.input.focus();
+    },
     clickInput: function() {
       this.errorInput = false;
       this.titleShow = false;

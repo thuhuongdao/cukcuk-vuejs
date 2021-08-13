@@ -74,11 +74,12 @@
 }
 .employee-modal .right-body > p {
   font-size: 15px;
-  margin-top: 0px;
+  margin-top: 12px;
   margin-bottom: 4px;
 }
 .employee-modal .right-body .information td {
   padding-right: 15px;
+  padding-bottom: 8px;
 }
 .employee-modal .right-body .information p {
   font-family: GoogleSans-Medium;

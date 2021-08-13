@@ -100,7 +100,7 @@
     ref="employeeDialog"
       @success="loadData"
       v-on:close-dialog="isShowDialog = false"
-      v-show="isShowDialog"
+      v-if="isShowDialog"
       :mode="dialogMode"
       :item="item"
     ></employee-dialog>
@@ -155,7 +155,9 @@ export default {
     this.loadData();
   },
   methods: {
-
+    autoFocus:function(){
+      this.$refs.employeeDialog.autoFocus();
+    },
     loadData: function() {
       console.log("load");
       axios
@@ -198,7 +200,7 @@ export default {
           console.log(error);
         });
     },
-    addEmployee: function() {
+     addEmployee:async function() {
       this.dialogMode = "add";
       this.item = {
         employeeCode: "",
@@ -217,8 +219,9 @@ export default {
         salary: null,
         joinDate: null,
       };
-      this.getNewEmployeeCode();
+     await this.getNewEmployeeCode();
       this.isShowDialog = true;
+
     },
     editEmployee:function(index){
 
