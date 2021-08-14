@@ -6,6 +6,7 @@ var format = {
     },
   formatMoney(number){
     if(number == null) return "";
+    else if(number == "") return "";
     return new Intl.NumberFormat('de-DE').format(number);
   }
 }

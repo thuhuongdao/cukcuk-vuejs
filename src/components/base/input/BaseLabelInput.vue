@@ -7,7 +7,8 @@
       autocomplete="on"
       type="text"
       placeholder=""
-      v-model="inputValue"
+      :value="fomat(inputValue)"
+      @input="inputValue = $event.target.value"
       ref="input"
       @focus="focusInput"
       @keypress="keyPress"
@@ -39,6 +40,7 @@
 @import "../../../css/base/input/label-input.css";
 </style>
 <script>
+
 export default {
   props: {
     status: String,
@@ -68,13 +70,28 @@ export default {
         if (val != "" && val != null ) {
         this.xShow = true;
         }else this.xShow=false;
-       
+        console.log(val);
+       if(this.inputType== "salary"){
+            if(val == "") val = null;
+            else val = Number(String(val).replaceAll('.', ''));
+       }
         this.$emit("input", val);
       },
     },
   },
  
   methods: {
+    fomat: function(value){
+      if(this.inputType =="salary" ) return this.formatMoney(value);
+      else return value;
+    }, 
+    formatMoney: function(number){
+        if(number == null) return "";
+    
+        else return new Intl.NumberFormat('de-DE').format(number);
+        
+
+    },
     autoFocus: function(){
       this.$refs.input.focus();
     },
@@ -106,6 +123,7 @@ export default {
       else this.xShow = false;
     },
     blurInput: function() {
+      console.log('ksakjsa');
     
       this.activeInput = false;
     
