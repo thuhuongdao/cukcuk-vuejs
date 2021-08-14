@@ -9,7 +9,7 @@
       placeholder=""
       v-model="inputValue"
       ref="input"
-      @click="clickInput"
+      @focus="focusInput"
       @keypress="keyPress"
       @keyup="keyUp"
       @blur="blurInput"
@@ -65,34 +65,32 @@ export default {
         return this.value;
       },
       set(val) {
+        if (val != "" && val != null ) {
+        this.xShow = true;
+        }else this.xShow=false;
+       
         this.$emit("input", val);
       },
     },
   },
-  watch: {
-    value: function(val) {
-      if (val != "" && val != null ) {
-        this.xShow = true;
-      }else this.xShow=false;
-    },
-  },
+ 
   methods: {
     autoFocus: function(){
-      // console.log("auto12");
-      
-      // console.log(this.$refs.input);
- 
       this.$refs.input.focus();
     },
-    clickInput: function() {
-      this.errorInput = false;
-      this.titleShow = false;
+    errorShow: function(value){
+      this.errorInput = value;
+      this.titleShow = value;
+    },
+    focusInput: function() {
+      this.errorShow(false);
       this.activeInput = true;
+      
     },
     keyPress: function(event){
     
  
-      if(this.inputType == "identify" || this.inputType == "phoneNumber" || this.inputType == "tax-code" || this.inputType == "salary" ){
+      if(this.inputType == "identityNumber" || this.inputType == "phoneNumber" || this.inputType == "tax-code" || this.inputType == "salary" ){
 
         if(event.keyCode <48 || event.keyCode >57){
           event.preventDefault();
@@ -114,26 +112,48 @@ export default {
       if (this.status == "1") {
     
         if (this.inputValue == ""){
-          this.errorInput = true;
-          this.errorMsg = "Bắt buộc nhập thông tin này";
+          this.errorMsg = "Thông tin này bắt buộc nhập";
+          this.errorShow(true);
+          return false;
         
-          this.titleShow = true;
         }
       }
       if (this.inputType == "email") {
         let reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!reg.test(this.inputValue.toLowerCase())) this.errorInput = true;
+        if (!reg.test(this.inputValue.toLowerCase())) 
+        {
+          this.errorMsg = "Email không đúng định dạng";
+          this.errorShow(true);
+          return false;
+      
+        }
       }
       if (this.inputType == "phoneNumber") {
-        let reg = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
-        if (!reg.test(this.inputValue)) this.errorInput = true;
+        let reg = /((84|0)[3|5|7|8|9])+([0-9]{8})\b/;
+        if (!reg.test(this.inputValue)) {
+          this.errorMsg = "Số điện thoại không đúng định dạng";
+          this.errorShow(true);
+          return false;
+
+        }
       }
-      this.$emit('blur', this.errorInput);
+      if (this.inputType == "identityNumber") {
+        if(this.inputValue.length != 9 && this.inputType.length != 12){
+          this.errorMsg = "Số CMTND/Căn cước không đúng";
+          this.errorShow(true);
+          return false;
+        }
+
+      }
+      
+      return true;
+      //this.$emit('blur', this.errorInput);
+      
     },
     deleteInput: function() {
       this.inputValue = "";
       this.xShow = false;
-      this.$refs.input.click();
+ 
       this.$refs.input.focus();
     },
   },

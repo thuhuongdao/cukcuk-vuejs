@@ -29,7 +29,13 @@ export default {
       var day = date.getDate();
       
       var year = date.getFullYear();
-      if(this.dateType == "dateOfBirth") year = year - 15;
+      if(this.dateType == "dateOfBirth") 
+      {
+        year = year - 15;
+        if(day == 29 && month == 2 && year % 4 == 0 & year % 100 != 0){
+            day = 28; 
+        }
+      }
       if (month < 10) month = "0" + month;
       if (day < 10) day = "0" + day;
      

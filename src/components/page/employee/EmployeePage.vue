@@ -114,7 +114,7 @@ import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios);
 
 import format from "../../../script/common/format";
-
+import Const from "../../../script/common/const.js";
 
 import BaseIconButton from "../../base/button/BaseIconButton.vue";
 
@@ -147,7 +147,7 @@ export default {
       dialogMode: "add",
       newEmployeeCode: undefined,
       checkedId : [],
-      genderList: ["Nữ", "Nam","Khác"],
+      genderList: ["Nữ", "Nam","Không xác định"],
       workStatusList: ["","Đang thử việc","Đang làm việc", "Đã Nghỉ việc","Đã nghỉ hưu"]
     };
   },
@@ -201,19 +201,22 @@ export default {
         });
     },
      addEmployee:async function() {
-      this.dialogMode = "add";
+      this.dialogMode = Const.dialogMode.Add;
       this.item = {
         employeeCode: "",
         fullName: "",
         dateOfBirth: null,
         gender: null,
+        genderName : "",
         identityNumber: "",
         identityDate: null,
         identityPlace: "",
-        imail: "",
+        email: "",
         phoneNumber: "",
         departmentId: null,
+        departmentName: "",
         positionId: null,
+        positionName: "",
         workStatus: null,
         personalTaxCode: "",
         salary: null,
@@ -224,25 +227,28 @@ export default {
 
     },
     editEmployee:function(index){
-
-
-      this.dialogMode = "edit";
-      this.item.EmployeeId = this.list[index].EmployeeId;
-      this.item.EmployeeCode = this.list[index].EmployeeCode;
-      this.item.FullName = this.list[index].FullName;
-      this.item.DateOfBirth = this.list[index].DateOfBirth;
-      this.item.Gender = this.list[index].Gender;
-      this.item.IdentityNumber = this.list[index].IdentityNumber;
-      this.item.IdentityDate = this.list[index].IdentityDate;
-      this.item.IdentityPlace = this.list[index].IdentityPlace;
-      this.item.PhoneNumber = this.list[index].PhoneNumber;
-      this.item.Email = this.list[index].Email;
-      this.item.DepartmentId = this.list[index].DepartmentId;
-      this.item.PositionId = this.list[index].PositionId;
-      this.item.WorkStatus = this.list[index].WorkStatus;
-      this.item.PersonalTaxCode = this.list[index].PersonalTaxCode;
-      this.item.Salary = this.list[index].Salary;
-      this.item.JoinDate = this.list[index].JoinDate;
+      this.dialogMode = Const.dialogMode.Edit;
+      this.item = {
+        employeeId : this.list[index].employeeId,
+        employeeCode: this.list[index].employeeCode,
+        fullName: this.list[index].fullName,
+        dateOfBirth: this.list[index].dateOfBirth,
+        gender: this.list[index].gender,
+        genderName : this.genderName(this.list[index].gender),
+        identityNumber: this.list[index].identityNumber,
+        identityDate: this.list[index].identityDate,
+        identityPlace: this.list[index].identityPlace,
+        email: this.list[index].email,
+        phoneNumber: this.list[index].phoneNumber,
+        departmentId: this.list[index].departmentId,
+        departmentName: this.list[index].departmentName,
+        positionId: this.list[index].positionId,
+        positionName: this.list[index].positionName,
+        workStatus:this.list[index].workStatus,
+        personalTaxCode: this.list[index].personalTaxCode,
+        salary: this.list[index].salary,
+        joinDate: this.list[index].joinDate,
+      };
      
       this.isShowDialog = true;
     },

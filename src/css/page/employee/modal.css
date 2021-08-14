@@ -8,7 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: #ffffffbb;
 }
 .employee-modal .modal-content {
   background-color: rgb(255, 255, 255);
@@ -17,6 +17,7 @@
   
   position: relative;
   border-radius: 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .employee-modal .modal-content .modal-top {
   padding-top: 24px;

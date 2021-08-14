@@ -28,7 +28,7 @@
                   <td>
                     <p>Mã nhân viên (<span class="star">*</span>)</p>
                     <base-label-input
-                      id="employee-code"
+                      
                       ref="employeeCode"
                       status="1"
                       :value="item.employeeCode"
@@ -40,7 +40,8 @@
                   <td>
                     <p>Họ và tên (<span class="star">*</span>)</p>
                     <base-label-input
-                      id="employee-fullname"
+                      ref="fullName"
+                     
                       status="1"
                       :value="item.fullName"
                       @input="item.fullName = $event"
@@ -54,7 +55,7 @@
                   <td>
                     <p>Ngày sinh</p>
                     <base-date-input
-                      id="employee-dob"
+                  
                       :date="formatDateInput(item.dateOfBirth)"
                       v-on:pick-date="item.dateOfBirth = $event"
                       dateType = "dateOfBirth"
@@ -63,9 +64,10 @@
                   <td>
                     <p>Giới tính</p>
                     <base-auto-combo-box
-                      id="employee-gender"
+                      
                       type="gender"
                       :value="item.gender"
+                      :textValue="item.genderName"
                       v-on:select="item.gender = $event"
                       comboWidth="300px"
                       @blur="error.gender = $event"
@@ -77,18 +79,18 @@
                   <td>
                     <p>Số CMTND/ Căn cước (<span class="star">*</span>)</p>
                      <base-label-input
-                      id="employee-identify"
+                      ref="identityNumber"
                       status="1"
                       :value="item.identityNumber"
                       @input="item.identityNumber = $event"
-                      inputType="identify"
+                      inputType="identityNumber"
                       @blur="error.identityNumber = $event"
                     ></base-label-input>
                   </td>
                   <td>
                     <p>Ngày cấp</p>
                     <base-date-input
-                      id="employee-indetify-date"
+                    
                       :date="formatDateInput(item.identityDate)"
                       v-on:pick-date="item.identityDate = $event"
                       dateType = "identityDate"
@@ -100,7 +102,7 @@
                   <td>
                     <p>Nơi cấp</p>
                     <base-label-input
-                      id="employee-identify-place"
+                      
                       status="0"
                       :value="item.identityPlace"
                       @input="item.identityPlace = $event"
@@ -113,7 +115,7 @@
                   <td>
                     <p>Email (<span class="star">*</span>)</p>
                     <base-label-input
-                      id="employee-email"
+                      ref="email"
                       status="1"
                       :value="item.email"
                       @input="item.email = $event"
@@ -124,7 +126,7 @@
                   <td>
                     <p>Số điện thoại (<span class="star">*</span>)</p>
                     <base-label-input
-                      id="employee-phone"
+                      ref="phoneNumber"
                       status="1"
                       :value="item.phoneNumber"
                       @input="item.phoneNumber = $event"
@@ -146,6 +148,7 @@
                       id="employee-position"
                       type="position"
                       :value="item.positionId"
+                      :textValue="item.positionName"
                       v-on:select="item.positionId = $event"
                       comboWidth="300px"
                       @blur="error.position = $event"
@@ -157,6 +160,7 @@
                       id="employee-department"
                       type="department"
                       :value="item.departmentId"
+                      :textValue="item.departmentName"
                       v-on:select="item.departmentId = $event"
                       comboWidth="300px"
                       @blur="error.department = $event"
@@ -239,6 +243,7 @@ import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios);
+import Const from '../../../script/common/const.js';
 
 import BaseLabelInput from "../../base/input/BaseLabelInput.vue";
 import BaseAutoComboBox from "../../base/BaseAutoComboBox.vue";
@@ -286,10 +291,7 @@ export default {
                 this.close();
             }
     },
-    //  autoFocus: function(){
-    //    console.log("auto");
-    //   this.$refs.employeeCode.autoFocus();
-    // },
+    
     formatDateInput:function(value){
       if(value == null) return null;
       var date = new Date(value);
@@ -310,18 +312,15 @@ export default {
     },
 
     validForm: function() {
-      if (
-        this.item.employeeCode == "" ||
-        this.item.fullName == "" ||
-        this.item.identityNumber == "" ||
-        this.item.email == "" ||
-        this.item.phoneNumber == ""
-      )
-        return false;
-      for (let item in this.error) {
-        if (this.error[item] == true) return false;
-      }
-      return true;
+      var valid = true;
+
+
+      if(this.$refs.employeeCode.blurInput() == false ) valid = false;
+      if( this.$refs.fullName.blurInput() == false) valid = false;
+      if( this.$refs.email.blurInput() == false) valid = false;
+      if(this.$refs.phoneNumber.blurInput() == false) valid = false;
+      if(this.$refs.identityNumber.blurInput() == false ) valid = false;
+      return valid;
     },
     addEmployee: function() {
       axios
@@ -335,7 +334,7 @@ export default {
     },
     editEmployee: function(){
      
-      axios.put("http://cukcuk.manhnv.net/v1/Employees/" + this.item.employeeId, this.item)
+      axios.put("https://localhost:44301/api/v1/employees", this.item)
       .then((res) =>{
         console.log(res);
         
@@ -345,11 +344,11 @@ export default {
     },
 
     save: function() {
-
+      console.log("save");
       if (this.validForm()) {
 
 
-        if (this.mode == "add") this.addEmployee();
+        if (this.mode == Const.dialogMode.Add) this.addEmployee();
         else this.editEmployee();
       }
     },

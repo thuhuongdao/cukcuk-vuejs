@@ -2,7 +2,7 @@
 <div class="pop-up-background" @click="clickOutSide">
     <div class="pop-up">
         <div class="x-icon" @click="close"></div>
-        <div class="title">Xóa bản ghi A</div>
+        <div class="title">Xóa bản ghi </div>
         <div class="content">
             <div class="warning-icon"><i class="fas fa-exclamation-triangle" style="color: red"></i></div>
             <div class="warning-text">Bạn có chắc muốn xóa bản ghi này hay không?</div>

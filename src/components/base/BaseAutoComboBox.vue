@@ -57,6 +57,7 @@ export default {
     value: {
       default : null,
     },
+    textValue : String
   },
   data() {
     return {
@@ -101,8 +102,20 @@ export default {
     }else if(this.type == "workStatus"){
       this.goodsList = [
        {
-          id: 0,
+          id: 1,
           name: "Đang thử việc",
+        },
+        {
+          id: 2,
+          name: "Đang làm việc",
+        },
+        {
+          id: 3,
+          name: "Đã nghỉ việc",
+        },
+        {
+          id: 4,
+          name: "Đã nghỉ hưu",
         },
       ]
     }else if(this.type == "department"){
@@ -137,27 +150,43 @@ export default {
       });
 
     }
-  },
-  watch:{
-    value: function(val){
-      
-      if(val == null) {
+    if(this.value == null) {
         console.log("watch1");
         this.active = null;
         this.searchContent = "";
       }else{
         console.log("watch2");
         console.log(this.goodsList);
-        this.active = val;
-        let obj = this.goodsList.find(function(item){
-         // console.log(item.id);
-          return item.id == val;
-        });
+        this.active = this.value;
+        // let obj = this.goodsList.find(function(item){
+        //  // console.log(item.id);
+        //   return item.id == this.value;
+        // });
         
-        this.searchContent =  obj.name;
+        // this.searchContent =  obj.name;
+        this.searchContent=this.textValue;
       }
-    }
   },
+  // watch:{
+  //   value: function(val){
+      
+  //     if(val == null) {
+  //       console.log("watch1");
+  //       this.active = null;
+  //       this.searchContent = "";
+  //     }else{
+  //       console.log("watch2");
+  //       console.log(this.goodsList);
+  //       this.active = val;
+  //       let obj = this.goodsList.find(function(item){
+  //        // console.log(item.id);
+  //         return item.id == val;
+  //       });
+        
+  //       this.searchContent =  obj.name;
+  //     }
+  //   }
+  // },
 
 
 

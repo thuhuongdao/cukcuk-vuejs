@@ -49,7 +49,7 @@ padding: 10px;
 border-radius: 5px;
 background: #FF4747;
 color: #ffffff;
-font-size: 13px;
+font-size: 12px;
 text-align: center;
 
 
@@ -59,11 +59,11 @@ text-align: center;
  .input i{
 
 position: absolute;
-bottom: 25px;
+bottom: 26px;
 left: 50%;
 display: inline-block;
 color: #FF4747;
-font-size: 30px;
+font-size: 28px;
 
 
  }
